@@ -227,6 +227,24 @@ const listAppointment = async (req, res) => {
   }
 }
 
+// API to cancle appointment
+const cancleAppointment = async (req,res) => {
+  try {
+    const {userId, appointmentId}  = req.body
+
+    const appointmentData = await appointmentModel.findById(appointmentId)
+  
+    // verify appoitment user
+    if (appointmentData.userId !== userId) {
+      
+    }
+    
+  } catch (error) {
+     console.log(error)
+    res.json({ success: false, message: error.message })
+    
+  }
+}
 
  export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment }
   
