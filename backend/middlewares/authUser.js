@@ -25,14 +25,14 @@
 // }
 
 // export default authUser
-
 import jwt from 'jsonwebtoken'
+import userModel from '../models/userModel.js'
 
-const authUser = (req, res, next) => {
+const authUser = async (req, res, next) => {
   try {
     const token =
       req.headers.authorization?.split(' ')[1] ||
-      req.headers.token   // 👈 accept token header
+      req.headers.token
 
     if (!token) {
       return res.json({
@@ -43,10 +43,22 @@ const authUser = (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
-    req.user = { id: decoded.id }
+    // 🔥 FETCH FULL USER
+    const user = await userModel.findById(decoded.id).select('-password')
+
+    if (!user) {
+      return res.json({
+        success: false,
+        message: 'User not found'
+      })
+    }
+
+    // 🔥 ATTACH FULL USER
+    req.user = user
 
     next()
   } catch (error) {
+    console.log(error)
     return res.json({
       success: false,
       message: 'Invalid Token'
