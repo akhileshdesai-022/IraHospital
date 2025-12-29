@@ -7,6 +7,7 @@ import { v2 as cloudinary } from 'cloudinary'
 import doctorModel from '../models/doctorModel.js'
 import appointmentModel from '../models/appointmentModel.js'
 
+
 /* ================= REGISTER USER ================= */
 const registerUser = async (req, res) => {
   try {
@@ -264,8 +265,6 @@ const cancelAppointment = async (req, res) => {
     res.json({ success: false, message: error.message })
   }
 }
-
-
 
  export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment, cancelAppointment}
   
