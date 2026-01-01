@@ -46,28 +46,42 @@ return (
       </div>
 
       {
-        appointments.map((item,index)=>(
-          <div key={index}>
-            <p>{index+1}</p>
-            <div>
-              <img src={item.userData.image} alt="" /> <p>{item.userData.name}</p>
-            </div>
-            <div>
-              <p>
-                {item.payment ? 'Online' : 'CASH'}
-              </p>
-            </div>
-            <p>{calculateAge(item.userData.dob)}</p>
-            <p>{slotDateFormat(item.slotDate)}, {item.slotTime} </p>
-            <p>{currency}{item.amount}</p>
-            <div>
-              <img src={assets.cancel_icon} alt="" />
-              <img src={assets.tick_icon} alt="" />
-            </div>
-          
+  appointments.map((item, index) => (
+    <div key={index}>
+      <p>{index + 1}</p>
+
+      <div>
+        <img
+          src={item.userData?.image || "/default-avatar.png"}
+          alt="Patient"
+        />
+        <p>{item.userData?.name || "Unknown Patient"}</p>
+      </div>
+
+      <div>
+        <p>{item.payment ? "Online" : "CASH"}</p>
+      </div>
+
+      <p>
+        {item.userData?.dob
+          ? calculateAge(item.userData.dob)
+          : "--"}
+      </p>
+
+      <p>
+        {slotDateFormat(item.slotDate)}, {item.slotTime}
+      </p>
+
+      <p>{currency}{item.amount}</p>
+
+      <div>
+        <img src={assets.cancel_icon} alt="Cancel" />
+        <img src={assets.tick_icon} alt="Approve" />
+      </div>
     </div>
-        ))
-      }
+  ))
+}
+
     </div>
   </div>
 )
